@@ -1,3 +1,86 @@
+
+##Folder Structor for Linkedin Clone (NestJS + Prisma)##
+
+src/
+│
+├── auth/                    # Authentication (JWT, login, register)
+│   ├── auth.module.ts
+│   ├── auth.service.ts
+│   ├── auth.controller.ts
+│   └── dto/
+│       └── login.dto.ts
+│       └── register.dto.ts
+│
+├── user/                    # Users and profiles
+│   ├── user.module.ts
+│   ├── user.service.ts
+│   ├── user.controller.ts
+│   └── dto/
+│       └── update-profile.dto.ts
+│       └── create-user.dto.ts
+│
+├── experience/             # Work experience
+│   ├── experience.module.ts
+│   ├── experience.service.ts
+│   ├── experience.controller.ts
+│   └── dto/
+│
+├── education/              # Education history
+│   ├── education.module.ts
+│   ├── education.service.ts
+│   ├── education.controller.ts
+│   └── dto/
+│
+├── skill/                  # User skills
+│   ├── skill.module.ts
+│   ├── skill.service.ts
+│   ├── skill.controller.ts
+│   └── dto/
+│
+├── connection/             # Connections between users
+│   ├── connection.module.ts
+│   ├── connection.service.ts
+│   ├── connection.controller.ts
+│   └── dto/
+│
+├── post/                   # Posts (like status updates)
+│   ├── post.module.ts
+│   ├── post.service.ts
+│   ├── post.controller.ts
+│   └── dto/
+│
+├── comment/                # Comments on posts
+│   ├── comment.module.ts
+│   ├── comment.service.ts
+│   ├── comment.controller.ts
+│   └── dto/
+│
+├── message/                # Messaging between users
+│   ├── message.module.ts
+│   ├── message.service.ts
+│   ├── message.controller.ts
+│   └── dto/
+│
+├── prisma/                 # Prisma setup
+│   ├── prisma.module.ts
+│   ├── prisma.service.ts
+│
+├── common/                 # Shared utils, guards, pipes, interceptors
+│   ├── guards/
+│   ├── decorators/
+│   ├── filters/
+│   └── constants.ts
+│
+├── main.ts                 # App entry point
+├── app.module.ts
+│
+prisma/
+├── schema.prisma           # Prisma schema
+├── migrations/             # Optional: Prisma migration history
+│
+.env                        # Environment variables
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
