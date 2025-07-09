@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int         @id @default(autoincrement())
+  email       String      @unique
+  password    String
+  firstName   String
+  lastName    String
+  headline    String?
+  location    String?
+  about       String?
+  profileUrl  String?     // profile picture
+  createdAt   DateTime    @default(now())
+
+  experiences Experience[]
+  education   Education[]
+  skills      Skill[]
+  connections Connection[] @relation("UserConnections")
+  connectedTo Connection[] @relation("ConnectedUsers")
+  posts       Post[]
+  comments    Comment[]
+  messagesSent Message[]  @relation("MessagesSent")
+  messagesReceived Message[] @relation("MessagesReceived")
+}
+
+model Experience {
+  id          Int      @id @default(autoincrement())
+  title       String
+  company     String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Education {
+  id          Int      @id @default(autoincrement())
+  school      String
+  degree      String
+  field       String?
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Skill {
+  id      Int    @id @default(autoincrement())
+  name    String
+  userId  Int
+  user    User   @relation(fields: [userId], references: [id])
+}
+
+model Connection {
+  id          Int    @id @default(autoincrement())
+  requesterId Int
+  receiverId  Int
+  status      String    // "pending", "accepted", "rejected"
+  createdAt   DateTime  @default(now())
+
+  requester   User @relation("UserConnections", fields: [requesterId], references: [id])
+  receiver    User @relation("ConnectedUsers", fields: [receiverId], references: [id])
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  content   String
+  imageUrl  String?
+  createdAt DateTime  @default(now())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  comments  Comment[]
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  content   String
+  createdAt DateTime  @default(now())
+  userId    Int
+  postId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  post      Post      @relation(fields: [postId], references: [id])
+}
+
+model Message {
+  id          Int      @id @default(autoincrement())
+  content     String
+  sentAt      DateTime @default(now())
+  senderId    Int
+  receiverId  Int
+
+  sender      User @relation("MessagesSent", fields: [senderId], references: [id])
+  receiver    User @relation("MessagesReceived", fields: [receiverId], references: [id])
+}
